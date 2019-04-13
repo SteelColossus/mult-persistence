@@ -1,0 +1,15 @@
+[package]
+name = "mult-persistence"
+version = "0.1.0"
+authors = ["Michael Winkworth"]
+edition = "2018"
+
+[dependencies]
+rayon = "1.0.3"
+
+[dev-dependencies]
+criterion = "0.2.11"
+
+[[bench]]
+name = "calc_slice"
+harness = false
