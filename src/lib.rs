@@ -1,6 +1,8 @@
+// This function takes a digits vector in reverse order, i.e. with the highest order digit coming first
 fn mult_one_digit(digits: &mut Vec<u8>, mult: u8) {
     match mult {
         0 => {
+            // In theory this should never be run because zeroes are checked for earlier
             digits.truncate(1);
             digits[0] = 0;
         }
@@ -8,14 +10,14 @@ fn mult_one_digit(digits: &mut Vec<u8>, mult: u8) {
         2...9 => {
             let mut carry_over = 0;
 
-            for d in digits.iter_mut().rev() {
+            for d in digits.iter_mut() {
                 let d_mult = *d * mult + carry_over;
                 carry_over = d_mult / 10;
                 *d = d_mult % 10;
             }
 
             if carry_over > 0 {
-                digits.insert(0, carry_over);
+                digits.push(carry_over);
             }
         }
         _ => panic!("Invalid digit: {}", mult),
@@ -26,14 +28,17 @@ fn mult_digits(digits: &[u8]) -> Vec<u8> {
     if digits.len() == 1 {
         digits.to_vec()
     } else {
+        // Check for zeroes to see if we can exit early before doing the main calculation
+        for d in digits {
+            if *d == 0 {
+                return vec![0];
+            }
+        }
+
         let mut new_digits = vec![1];
 
-        for d in digits.iter() {
+        for d in digits {
             mult_one_digit(&mut new_digits, *d);
-
-            if new_digits.len() == 1 && new_digits[0] == 0 {
-                break;
-            }
         }
 
         new_digits
@@ -75,7 +80,7 @@ fn is_candidate(digits: &[u8]) -> bool {
     let mut has_five = false;
     let mut has_even = false;
 
-    for d in digits.iter() {
+    for d in digits {
         if *d == 5 {
             has_five = true;
         } else if *d % 2 == 0 {
@@ -207,35 +212,45 @@ mod tests {
     #[test]
     fn multiplying_by_zero_test() {
         let mut digits = vec![1, 8, 1];
+        digits.reverse();
         mult_one_digit(&mut digits, 0);
+        digits.reverse();
         assert_eq!(digits, vec![0]);
     }
 
     #[test]
     fn multiplying_by_one_test() {
         let mut digits = vec![1, 8, 1];
+        digits.reverse();
         mult_one_digit(&mut digits, 1);
+        digits.reverse();
         assert_eq!(digits, vec![1, 8, 1]);
     }
 
     #[test]
     fn multiplying_by_two_test() {
         let mut digits = vec![1, 8, 1];
+        digits.reverse();
         mult_one_digit(&mut digits, 2);
+        digits.reverse();
         assert_eq!(digits, vec![3, 6, 2]);
     }
 
     #[test]
     fn multiplying_by_nine_test() {
         let mut digits = vec![1, 8, 1];
+        digits.reverse();
         mult_one_digit(&mut digits, 9);
+        digits.reverse();
         assert_eq!(digits, vec![1, 6, 2, 9]);
     }
 
     #[test]
     fn multiplying_large_numbers_test() {
         let mut digits = vec![1, 3, 5, 0, 8, 5, 1, 7, 1, 7, 6, 7, 2, 9, 9, 2, 0, 8, 9];
+        digits.reverse();
         mult_one_digit(&mut digits, 7);
+        digits.reverse();
         assert_eq!(
             digits,
             vec![9, 4, 5, 5, 9, 6, 2, 0, 2, 3, 7, 1, 0, 9, 4, 4, 6, 2, 3]
