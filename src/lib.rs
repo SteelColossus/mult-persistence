@@ -110,26 +110,6 @@ fn is_candidate(digits: &[u8]) -> bool {
     true
 }
 
-fn fill_highest(candidate: &mut [u8]) {
-    let mut max = 0;
-    let mut max_i = 0;
-
-    for (i, d) in candidate.iter().enumerate() {
-        if max < *d {
-            max = *d;
-            max_i = i;
-        }
-
-        if max == 9 {
-            break;
-        }
-    }
-
-    for d in candidate.iter_mut().skip(max_i + 1) {
-        *d = max;
-    }
-}
-
 fn next_candidate(prev_candidate: &[u8]) -> Vec<u8> {
     let mut curr_candidate = prev_candidate.to_vec();
     let mut len = curr_candidate.len();
@@ -152,22 +132,20 @@ fn next_candidate(prev_candidate: &[u8]) -> Vec<u8> {
         if i_changed {
             if new_digit_needed {
                 len += 1;
-                curr_candidate.insert(0, 2);
+                curr_candidate = initial_candidate(len);
                 new_digit_needed = false;
             } else {
                 curr_candidate[i] += 1;
-            }
 
-            for d in curr_candidate.iter_mut().skip(i + 1) {
-                *d = 4;
+                let min_digit = curr_candidate[i];
+
+                for d in curr_candidate.iter_mut().skip(i + 1) {
+                    *d = min_digit;
+                }
             }
 
             i = len - 1;
             i_changed = false;
-
-            if !new_digit_needed {
-                fill_highest(&mut curr_candidate);
-            }
         } else {
             curr_candidate[i] += 1;
         }
@@ -299,13 +277,6 @@ mod tests {
         assert_eq!(next_candidate(&[6, 7, 6]), vec![6, 7, 7]);
         assert_eq!(next_candidate(&[0]), vec![2, 6]);
         assert_eq!(next_candidate(&[3, 3, 3]), vec![3, 4, 4]);
-    }
-
-    #[test]
-    fn fill_highest_test() {
-        let mut digits = [6, 7, 6, 5];
-        fill_highest(&mut digits);
-        assert_eq!(digits, [6, 7, 7, 7]);
     }
 
     #[test]
