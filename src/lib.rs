@@ -7,7 +7,7 @@ fn mult_one_digit(digits: &mut Vec<u8>, mult: u8) {
             digits[0] = 0;
         }
         1 => (),
-        2...9 => {
+        2..=9 => {
             let mut carry_over = 0;
 
             for d in digits.iter_mut() {

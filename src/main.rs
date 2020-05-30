@@ -40,9 +40,7 @@ fn main() {
         exit();
     }
 
-    // Rayon doesn't work currently with inclusive ranges
-    #[allow(clippy::range_plus_one)]
-    (min..(max + 1)).into_par_iter().for_each(|x| {
+    (min..=max).into_par_iter().for_each(|x| {
         println!("{} digits slice started", x);
         let (digits, res_digit, n_times) = mult_persistence::calc_slice(x);
         println!(
