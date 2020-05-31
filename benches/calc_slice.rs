@@ -1,9 +1,4 @@
-#[macro_use]
-extern crate criterion;
-
-use criterion::black_box;
-use criterion::Criterion;
-
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
 use mult_persistence;
 
 fn criterion_benchmark(c: &mut Criterion) {

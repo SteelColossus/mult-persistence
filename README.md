@@ -12,3 +12,8 @@ cargo run --release
 ```
 cargo test
 ```
+
+## Running the benchmark
+```
+cargo bench
+```
