@@ -5,7 +5,7 @@ fn mult_one_digit(digits: &mut Vec<u8>, mult: u8) {
             // In theory this should never be run because zeroes are checked for earlier
             digits.truncate(1);
             digits[0] = 0;
-        }
+        },
         1 => (),
         2..=9 => {
             let mut carry_over = 0;
@@ -19,7 +19,7 @@ fn mult_one_digit(digits: &mut Vec<u8>, mult: u8) {
             if carry_over > 0 {
                 digits.push(carry_over);
             }
-        }
+        },
         _ => panic!("Invalid digit: {}", mult),
     }
 }

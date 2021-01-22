@@ -1,8 +1,9 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
-use mult_persistence;
 
 fn criterion_benchmark(c: &mut Criterion) {
-    c.bench_function("slice 10", |b| {
+    let mut group = c.benchmark_group("calc_slice");
+    group.sample_size(50);
+    group.bench_function("slice 10", |b| {
         b.iter(|| mult_persistence::calc_slice(black_box(10)))
     });
 }

@@ -1,7 +1,6 @@
 use std::io;
 use std::process;
 
-use mult_persistence;
 use rayon::prelude::*;
 
 fn main() {
