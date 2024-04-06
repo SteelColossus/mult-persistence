@@ -5,7 +5,7 @@ fn mult_one_digit(digits: &mut Vec<u8>, mult: u8) {
             // In theory this should never be run because zeroes are checked for earlier
             digits.truncate(1);
             digits[0] = 0;
-        },
+        }
         1 => (),
         2..=9 => {
             let mut carry_over = 0;
@@ -19,7 +19,7 @@ fn mult_one_digit(digits: &mut Vec<u8>, mult: u8) {
             if carry_over > 0 {
                 digits.push(carry_over);
             }
-        },
+        }
         _ => panic!("Invalid digit: {}", mult),
     }
 }
@@ -80,29 +80,29 @@ fn is_candidate(digits: &[u8]) -> bool {
     let mut has_five = false;
     let mut has_even = false;
 
-    for d in digits {
-        if *d == 5 {
+    for &d in digits {
+        if d == 5 {
             has_five = true;
-        } else if *d % 2 == 0 {
+        } else if d % 2 == 0 {
             has_even = true;
         }
 
-        if *d == 0
-            || *d == 1
-            || *d < highest
-            || (has_two && (*d == 2 || *d == 3 || *d == 4))
-            || (has_three && *d == 3)
+        if d == 0
+            || d == 1
+            || d < highest
+            || (has_two && (d == 2 || d == 3 || d == 4))
+            || (has_three && d == 3)
             || (has_five && has_even)
             || digits.len() < 2
         {
             return false;
         }
 
-        highest = *d;
+        highest = d;
 
-        if *d == 2 {
+        if d == 2 {
             has_two = true;
-        } else if *d == 3 {
+        } else if d == 3 {
             has_three = true;
         }
     }
@@ -173,7 +173,7 @@ pub fn calc_slice(max: usize) -> (Vec<u8>, u8, u8) {
 
         if max_times < n_times {
             max_times = n_times;
-            max_digits = digits.clone();
+            max_digits.clone_from(&digits);
             res_digit = res_digits[0];
         }
 
