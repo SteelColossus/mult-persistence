@@ -158,14 +158,14 @@ fn next_candidate(prev_candidate: &[u8]) -> Vec<u8> {
     curr_candidate
 }
 
-pub fn calc_slice(max: usize) -> (Vec<u8>, u8, u8) {
-    let mut digits = initial_candidate(max);
+pub fn calc_slice(len: usize) -> (Vec<u8>, u8, u8) {
+    let mut digits = initial_candidate(len);
     let mut max_times = 0;
     let mut max_digits = digits.clone();
     let mut res_digit = 0;
 
     loop {
-        if digits.len() > max {
+        if digits.len() > len {
             break;
         }
 
