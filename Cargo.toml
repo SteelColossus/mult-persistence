@@ -5,4 +5,4 @@ authors = ["Michael Winkworth"]
 edition = "2021"
 
 [dependencies]
-rayon = "1.10.0"
+rayon = "1.11.0"
