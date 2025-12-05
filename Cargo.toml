@@ -1,8 +1,8 @@
 [package]
 name = "mult-persistence"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Michael Winkworth"]
-edition = "2021"
+edition = "2024"
 
 [dependencies]
 rayon = "1.11.0"
